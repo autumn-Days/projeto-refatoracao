@@ -18,6 +18,9 @@ class calculate():
         self.resultwindow.config(font=("Arial", 18))
         self.resultwindow.focus_set()
 
+        # Track if the last button pressed was "="
+        self.last_pressed_equal = False
+
         # Basic calculator buttons
         self.button1 = Button(self.root, text="1", width=3, command=lambda:self.ins('1'), relief=RAISED, bg='light green')
         self.button1.grid(row=1, column=0, padx=3, pady=3)
@@ -153,9 +156,11 @@ class calculate():
         self.button_sqrt.grid_forget()
 
     def ins(self, value):
+        self.last_pressed_equal = False
         self.resultwindow.insert(END, value)
 
     def clear(self):
+        self.last_pressed_equal = False
         self.resultwindow.delete(0, END)
 
     def calculate(self):
@@ -163,11 +168,14 @@ class calculate():
             result = eval(self.resultwindow.get())
             self.resultwindow.delete(0, END)
             self.resultwindow.insert(0, result)
+            self.last_pressed_equal = True
         except:
+            self.last_pressed_equal = False
             self.resultwindow.delete(0, END)
             self.resultwindow.insert(0, "Error")
 
     def scientific(self, operation):
+        self.last_pressed_equal = False
         try:
             value = float(self.resultwindow.get())
             if operation == 'sin':
@@ -205,14 +213,10 @@ class calculate():
             self.resultwindow.insert(0, "Error")
 
     def var(self, var_name):
-        # If the last character is '=', save the result to the variable
-        current_text = self.resultwindow.get()
-        if current_text.endswith('='):
+        if self.last_pressed_equal:
             try:
-                result = eval(current_text[:-1])
+                result = float(self.resultwindow.get())
                 self.save_var(var_name, result)
-                self.resultwindow.delete(0, END)
-                self.resultwindow.insert(0, result)
             except:
                 self.resultwindow.delete(0, END)
                 self.resultwindow.insert(0, "Error")
@@ -221,6 +225,7 @@ class calculate():
             value = self.load_var(var_name)
             self.resultwindow.delete(0, END)
             self.resultwindow.insert(0, value)
+        self.last_pressed_equal = False
 
     def save_var(self, var_name, value):
         with open(f"{var_name}.txt", "w") as file:
