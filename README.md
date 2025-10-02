@@ -3,20 +3,22 @@ Esse repositório é dedicado a refatoração do repositório `https://github.co
 
 # Objetivos
 1. Expansão pré-eliminar da aplicação para que ela encorpore também uma calculadora científica e trigonométrica, à medida em que os vícios no projeto são mantidos
-2. Refatoração pelo uso dos seguintes padrões de projeto: Factory, Observer e o Builder.
+2. Refatoração pelo uso dos seguintes padrões de projeto: Model-View-Controller(MVC), Observer, Strategy e Command.
 
 # Descrição dos padrões de projeto
 
-## Factory
-Uma vez que a aplicação incorporará 3 tipos de calculadora, as quais são básica, científica e trigonométrica, é conveniente usar o padrão Factory para que haja a abstração da seleção de qual objeto instacializar para fora da classe principal.
+## Model View Controller (MVC)
+
+Atualmente o sistema está implementando toda a lógica da interface gráfica dentro de um arquivo só. Com o MVC separaremos essa lógica em componentes separados para facilitar a manutenção do código.
 
 ## Observer
+
 Esse padrão vai ser usado para que a interface gráfica seja notificada de alguma mudança de estado e seja atualizada.
 
-## Builder
+## Strategy
 
-Facilitará o parsing das expressões
+Possibilitará instacilizar o tipo da calculadora, básica ou científica.
 
 ## Command
 
-Para facilitar a recuperação do histórico
+Vai possibilitar a utilização modelar os botões como classes, o que facilitará a manutenação do código futuramente.
