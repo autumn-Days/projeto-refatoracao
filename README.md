@@ -11,8 +11,12 @@ Esse repositório é dedicado a refatoração do repositório `https://github.co
 Uma vez que a aplicação incorporará 3 tipos de calculadora, as quais são básica, científica e trigonométrica, é conveniente usar o padrão Factory para que haja a abstração da seleção de qual objeto instacializar para fora da classe principal.
 
 ## Observer
-Esse padrão vai ser usado para que a interface gráfica seja notificada de alguma mudança deestado e seja atualizada.
+Esse padrão vai ser usado para que a interface gráfica seja notificada de alguma mudança de estado e seja atualizada.
 
 ## Builder
 
-Servirá para que os
+Facilitará o parsing das expressões
+
+## Command
+
+Para facilitar a recuperação do histórico
