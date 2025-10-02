@@ -3,7 +3,7 @@ Esse repositório é dedicado a refatoração do repositório `https://github.co
 
 # Objetivos
 1. Expansão pré-eliminar da aplicação para que ela encorpore também uma calculadora científica e trigonométrica, à medida em que os vícios no projeto são mantidos
-2. Refatoração pelo uso dos seguintes padrões de projeto: Model-View-Controller(MVC), Observer, Strategy e Command.
+2. Refatoração pelo uso dos seguintes padrões de projeto: Model-View-Controller(MVC), Observer, Builder e Strategy.
 
 # Descrição dos padrões de projeto
 
@@ -15,10 +15,10 @@ Atualmente o sistema está implementando toda a lógica da interface gráfica de
 
 Esse padrão vai ser usado para que a interface gráfica seja notificada de alguma mudança de estado e seja atualizada.
 
+## Builder
+
+Possibilitará instacializar tipos de calculadora diferentes com facilidade (básica e científica) e possibilitará atualizar o sistema para obter novas funcionalidades. 
+
 ## Strategy
 
-Possibilitará instacilizar o tipo da calculadora, básica ou científica.
-
-## Command
-
-Vai possibilitar a utilização modelar os botões como classes, o que facilitará a manutenação do código futuramente.
+Possibilitar instacializar facilmente os tipos diferentes de calculadora (básica ou científica)
