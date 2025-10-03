@@ -20,6 +20,16 @@ class viewButton:
             self.button = Button(self.root, text="Switch to Scientific", width=20, command=self.toggle_mode, relief=RAISED, bg='light blue')
         elif type == "sci":
             self.button = Button(self.root, text=txt, width=3, command=lambda:self.scientific(cmd), relief=RAISED, bg='light blue')
+        self.button0 = self.createButton("0", "number")
+        self.button1 = self.createButton("1", "number")
+        self.button2 = self.createButton("2", "number")
+        self.button3 = self.createButton("3", "number")
+        self.button4 = self.createButton("4", "number")
+        self.button5 = self.createButton("5", "number")
+        self.button6 = self.createButton("6", "number")
+        self.button7 = self.createButton("7", "number")
+        self.button8 = self.createButton("8", "number")
+        self.button9 = self.createButton("9", "number")
         
     def showButton(self):
         self.button.grid(row=self.row, column=self.col, padx=3, pady=3)
@@ -27,3 +37,15 @@ class viewButton:
             self.mode_button.grid(row=self.row, column=self.col, columnspan=6, padx=3, pady=3)
         if self.type != "sci":
             self.button.config(font=("Arial", 18))
+    
+    def createButton(self, label:str, typeButton:str):
+        text =label
+        width_=None
+        color=None
+        if typeButton == "number":
+            width_ = 3
+            color = "light green"
+        else:
+            pass
+        
+        return Button(self.root, text="1", width=width_, command=lambda:self.ins(text), relief=RAISED, bg=color)
