@@ -7,6 +7,7 @@ class viewButton:
         self.row = rw
         self.col = cl
         self.type = type
+        self.self.last_pressed_equal = False
         if type == "regular" :
             self.button = Button(self.root, text=txt, width=3, command=lambda:self.ins(cmd), relief=RAISED, bg='light green')
         elif type == "equal":
@@ -19,6 +20,7 @@ class viewButton:
             self.button = Button(self.root, text="Switch to Scientific", width=20, command=self.toggle_mode, relief=RAISED, bg='light blue')
         elif type == "sci":
             self.button = Button(self.root, text=txt, width=3, command=lambda:self.scientific(cmd), relief=RAISED, bg='light blue')
+        
     def showButton(self):
         self.button.grid(row=self.row, column=self.col, padx=3, pady=3)
         if self.type == "switch":

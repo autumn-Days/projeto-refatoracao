@@ -5,21 +5,6 @@ import os
 class calculate():
 
     def __init__(self):
-        self.root = Tk()
-        self.root.title("Calculator")
-        self.root.geometry("400x450")  # Adjusted height for variable buttons
-
-        self.root.maxsize(400, 450)
-        self.root.minsize(400, 450)
-        self.root.config(bg="grey")
-
-        self.resultwindow = Entry(self.root, borderwidth=5, relief=SUNKEN)
-        self.resultwindow.grid(row=0, column=0, columnspan=6, pady=5)
-        self.resultwindow.config(font=("Arial", 18))
-        self.resultwindow.focus_set()
-
-        # Track if the last button pressed was "="
-        self.last_pressed_equal = False
 
         # Basic calculator buttons
         self.button1 = Button(self.root, text="1", width=3, command=lambda:self.ins('1'), relief=RAISED, bg='light green')
