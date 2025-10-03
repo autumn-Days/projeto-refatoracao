@@ -221,10 +221,9 @@ class calculate():
                 self.resultwindow.delete(0, END)
                 self.resultwindow.insert(0, "Error")
         else:
-            # Retrieve the variable value
+            # Insert the variable's value at the cursor position
             value = self.load_var(var_name)
-            self.resultwindow.delete(0, END)
-            self.resultwindow.insert(0, value)
+            self.resultwindow.insert(END, value)
         self.last_pressed_equal = False
 
     def save_var(self, var_name, value):
@@ -240,3 +239,4 @@ class calculate():
 
 # Run the calculator
 calculate()
+ 
