@@ -7,7 +7,7 @@ class calculate():
     def __init__(self):
         self.root = Tk()
         self.root.title("Calculator")
-        self.root.geometry("400x450")  # Adjusted height for variable buttons
+        self.root.geometry("400x450")
 
         self.root.maxsize(400, 450)
         self.root.minsize(400, 450)
@@ -18,10 +18,8 @@ class calculate():
         self.resultwindow.config(font=("Arial", 18))
         self.resultwindow.focus_set()
 
-        # Track if the last button pressed was "="
         self.last_pressed_equal = False
 
-        # Basic calculator buttons
         self.button1 = Button(self.root, text="1", width=3, command=lambda:self.ins('1'), relief=RAISED, bg='light green')
         self.button1.grid(row=1, column=0, padx=3, pady=3)
         self.button1.config(font=("Arial", 18))
@@ -86,7 +84,6 @@ class calculate():
         self.button_clear.grid(row=4, column=0, padx=3, pady=3)
         self.button_clear.config(font=("Arial", 18))
 
-        # Scientific calculator buttons (initially hidden)
         self.button_sin = Button(self.root, text="sin", width=3, command=lambda:self.scientific('sin'), relief=RAISED, bg='light blue')
         self.button_cos = Button(self.root, text="cos", width=3, command=lambda:self.scientific('cos'), relief=RAISED, bg='light blue')
         self.button_tan = Button(self.root, text="tan", width=3, command=lambda:self.scientific('tan'), relief=RAISED, bg='light blue')
@@ -99,7 +96,6 @@ class calculate():
         self.button_mod = Button(self.root, text="mod", width=3, command=lambda:self.scientific('mod'), relief=RAISED, bg='light blue')
         self.button_sqrt = Button(self.root, text="√", width=3, command=lambda:self.scientific('sqrt'), relief=RAISED, bg='light blue')
 
-        # Variable buttons
         self.button_A = Button(self.root, text="A", width=3, command=lambda:self.var('A'), relief=RAISED, bg='light yellow')
         self.button_A.grid(row=5, column=0, padx=3, pady=3)
         self.button_A.config(font=("Arial", 18))
@@ -112,8 +108,7 @@ class calculate():
         self.button_C.grid(row=5, column=2, padx=3, pady=3)
         self.button_C.config(font=("Arial", 18))
 
-        # Mode toggle at the bottom
-        self.mode = "basic"  # Default mode
+        self.mode = "basic"
         self.mode_button = Button(self.root, text="Switch to Scientific", width=20, command=self.toggle_mode, relief=RAISED, bg='light blue')
         self.mode_button.grid(row=6, column=0, columnspan=6, padx=3, pady=3)
 
@@ -195,12 +190,10 @@ class calculate():
             elif operation == 'sqr':
                 result = value ** 2
             elif operation == 'pow':
-                # For x^y, prompt for y
                 self.resultwindow.delete(0, END)
                 self.resultwindow.insert(0, f"{value}^")
                 return
             elif operation == 'mod':
-                # For mod, prompt for second value
                 self.resultwindow.delete(0, END)
                 self.resultwindow.insert(0, f"{value}%")
                 return
@@ -221,7 +214,6 @@ class calculate():
                 self.resultwindow.delete(0, END)
                 self.resultwindow.insert(0, "Error")
         else:
-            # Insert the variable's value at the cursor position
             value = self.load_var(var_name)
             self.resultwindow.insert(END, value)
         self.last_pressed_equal = False
@@ -237,6 +229,5 @@ class calculate():
         except FileNotFoundError:
             return "0"
 
-# Run the calculator
 calculate()
  
