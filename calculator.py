@@ -6,7 +6,6 @@ class calculate():
 
     def __init__(self):
 
-        # Basic calculator buttons]
         self.button_plus = Button(self.root, text="+", width=3, command=lambda:self.ins('+'), relief=RAISED, bg='light grey')
         self.button_plus.grid(row=1, column=3, padx=3, pady=3)
         self.button_plus.config(font=("Arial", 18))
@@ -31,7 +30,6 @@ class calculate():
         self.button_clear.grid(row=4, column=0, padx=3, pady=3)
         self.button_clear.config(font=("Arial", 18))
 
-        # Scientific calculator buttons (initially hidden)
         self.button_sin = Button(self.root, text="sin", width=3, command=lambda:self.scientific('sin'), relief=RAISED, bg='light blue')
         self.button_cos = Button(self.root, text="cos", width=3, command=lambda:self.scientific('cos'), relief=RAISED, bg='light blue')
         self.button_tan = Button(self.root, text="tan", width=3, command=lambda:self.scientific('tan'), relief=RAISED, bg='light blue')
@@ -44,7 +42,6 @@ class calculate():
         self.button_mod = Button(self.root, text="mod", width=3, command=lambda:self.scientific('mod'), relief=RAISED, bg='light blue')
         self.button_sqrt = Button(self.root, text="√", width=3, command=lambda:self.scientific('sqrt'), relief=RAISED, bg='light blue')
 
-        # Variable buttons
         self.button_A = Button(self.root, text="A", width=3, command=lambda:self.var('A'), relief=RAISED, bg='light yellow')
         self.button_A.grid(row=5, column=0, padx=3, pady=3)
         self.button_A.config(font=("Arial", 18))
@@ -57,8 +54,7 @@ class calculate():
         self.button_C.grid(row=5, column=2, padx=3, pady=3)
         self.button_C.config(font=("Arial", 18))
 
-        # Mode toggle at the bottom
-        self.mode = "basic"  # Default mode
+        self.mode = "basic"
         self.mode_button = Button(self.root, text="Switch to Scientific", width=20, command=self.toggle_mode, relief=RAISED, bg='light blue')
         self.mode_button.grid(row=6, column=0, columnspan=6, padx=3, pady=3)
 
