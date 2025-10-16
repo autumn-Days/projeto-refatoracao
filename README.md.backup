@@ -13,7 +13,7 @@ Esse repositório é dedicado a refatoração do repositório `https://github.co
 	+ View: Relacionado aos componentes da interface gráfica e layout
 	+ Model: Diz respeito a manipulação dos dados que o sistema guarda
 	+ Controller: Responsável por, de fato, realizar as operações que o usuário demanda.
-- Aplicabilidade: Atualmente, a calculadora separa o frontend do backend de uma forma bastante simples, com o MVC, é proposto que possamos melhorar essa estrutura. Além disso, ela implementa a funcionalidade de histórico, porém ela mistura o controller com o model, o que viola o princípio da "separação de preocupações", portanto, também será feito melhorias em relação a este ponto. Além disso, optamos por atualizar a funcionalidade de histórico para usar a memória secundária ao invés da principal e, com base nessa versão, 
+- Aplicabilidade: Atualmente, a calculadora separa o frontend do backend de uma forma bastante simples, com o MVC, é proposto que possamos melhorar essa estrutura. Além disso, ela implementa a funcionalidade de histórico, porém ela mistura o controller com o model, o que viola o princípio da "separação de preocupações", portanto, também será feito melhorias em relação a este ponto. Além disso, optamos por atualizar a funcionalidade de histórico para usar a memória secundária ao invés da principal e, com base nessa versão, refatorar o sistema.
 
 ## Observer
 
