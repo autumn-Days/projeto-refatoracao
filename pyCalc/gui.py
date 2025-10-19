@@ -8,7 +8,8 @@ except ImportError:
 	import Tkinter as tk
 	import ttk
 
-import parser
+#import parser
+import ast
 import base64
 from icons import icon_string
 
@@ -190,8 +191,9 @@ class TkGUI(tk.Tk):
 	    """
 	    whole_string = self.display.get()
 	    try:
-	        formulae = parser.expr(whole_string).compile()
-	        result = eval(formulae)
+	        result = eval(compile(ast.parse(whole_string, mode="eval"), "<string>", "eval"))
+			#formulae = ast.parse(whole_string, mode="eval")
+	        #result = eval(formulae)
 	        self.clear_all()
 	        self.display.insert(0, result)
 	    except Exception:
