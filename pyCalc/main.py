@@ -1,6 +1,7 @@
 #! /usr/bin/env python
-
+from calculatorModel import CalculatorModel
 from gui import TkGUI
 
-app = TkGUI()
+model = CalculatorModel()
+app = TkGUI(model)
 app.run()
