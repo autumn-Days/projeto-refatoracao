@@ -9,10 +9,12 @@ except ImportError:
 
 import ast
 
-class CalculatorModel:
+class CalculatorModel():
 
     def __init__(self):
 
+        self.FONT_LARGE = ("Calibri", 12)  	# selects the font of the text inside buttons
+        self.FONT_MED = ("Calibri", 10)
         self.number_btns = [    ('1', 2, 0), ('2', 2, 1), ('3', 2, 2),
                                 ('4', 3, 0), ('5', 3, 1), ('6', 3, 2),
                                 ('7', 4, 0), ('8', 4, 1), ('9', 4, 2),
@@ -28,6 +30,27 @@ class CalculatorModel:
 
         self.button_list = {}
         self.display = None
+
+    def _init_ui(self):
+        for button, y, x in self.number_btns :
+            self.button_list[button] = tk.Button(self, text=button, command=lambda btn=button: self.get_variables(int(btn)), font=self.FONT_LARGE)
+
+        for (button, y, x, op) in self.operation_btns :
+            self.button_list[button] = tk.Button(self, text=button, command=lambda v=op : self.get_operation(v), font=self.FONT_LARGE)
+		
+        for (button, y, x) in self.other_btns :
+            if button == "AC" :
+                self.button_list[button] = tk.Button(self, text=button, command=self.clear_all,
+					                        font=self.FONT_LARGE, foreground="red")
+            elif button == "=" :
+                self.button_list[button] = tk.Button(self, text=button, command=self.calculate,
+					                        font=self.FONT_LARGE, foreground="red")
+            elif button == "x!" :
+                self.button_list[button] = tk.Button(self, text="x!", command= lambda v="!": self.factorial(v),
+					                        font=self.FONT_LARGE)
+            elif button == "'<-" :
+                self.button_list[button] = tk.Button(self, text="<-", command= self.undo,
+					                        font=self.FONT_LARGE)
 
     def get_variables(self, num):
         """Gets the user input for operands and puts it inside the entry widget.
