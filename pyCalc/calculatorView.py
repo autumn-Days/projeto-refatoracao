@@ -13,10 +13,10 @@ import base64
 from icons import icon_string
 
 class CalculatorView(tk.Tk):
-	FONT_LARGE = ("Calibri", 12)  	# selects the font of the text inside buttons
+	FONT_LARGE = ("Calibri", 12)  	
 	FONT_MED = ("Calibri", 10)
 
-	# Max rows and columns in the GUI
+	
 	MAX_ROW = 4 
 	MAX_COLUMN = 5
 	i = 0
@@ -26,7 +26,7 @@ class CalculatorView(tk.Tk):
 		try:
 			super(CalculatorView, self).__init__()
 		except TypeError:
-			# Python 2
+			
 			tk.Tk.__init__(self)
 
 		self.model = model
@@ -35,12 +35,12 @@ class CalculatorView(tk.Tk):
 		self.title('Calculator')
 		self.resizable(width=False, height=False)
 
-		# Configure default theme
+		
 		style = ttk.Style(self)
 		style.theme_use('clam')
 
 	def config_icon(self):
-		# Configure icon
+		
 		icon_data = base64.b64decode(icon_string)
 		self.icon = tk.PhotoImage(data=icon_data)
 		self.tk.call('wm', 'iconphoto', self._w, self.icon)
@@ -83,7 +83,6 @@ class CalculatorView(tk.Tk):
 
 
 	def factorial(self, operator):
-		"""Calculates the factorial of the number entered."""
 		number = int(self.display.get())
 		fact = 1
 		try:
@@ -97,31 +96,25 @@ class CalculatorView(tk.Tk):
 			self.display.insert(0, "Error")
 
 	def clear_all(self, new_operation=True):
-		"""clears all the content in the Entry widget."""
 		self.display.delete(0, tk.END)
 		self.NEW_OPERATION = new_operation
 
 	def get_variables(self, num):
-		"""Gets the user input for operands and puts it inside the entry widget.
-
-		If a new operation is being carried out, then the display is cleared.
-		"""
 		if self.NEW_OPERATION:
 			self.clear_all(new_operation=False)
 		self.display.insert(self.i, num)
 		self.i += 1
 
 	def get_operation(self, operator):
-		"""Gets the operand the user wants to apply on the functions."""
+		#Obtem o operando que o usuario quer aplicar a uma funcao
 		length = len(operator)
 		self.display.insert(self.i, operator)
 		self.i += length
 
 	def undo(self):
-		"""removes the last entered operator/variable from entry widget."""
+		#Remove o ultim operador ou digito inserido
 		whole_string = self.display.get()
-		if len(whole_string):        ## repeats until
-			## now just decrement the string by one index
+		if len(whole_string):        
 			new_string = whole_string[:-1]
 			self.clear_all(new_operation=False)
 			self.display.insert(0, new_string)
@@ -143,5 +136,4 @@ class CalculatorView(tk.Tk):
 			self.display.insert(0, "Error!")
 
 	def run(self):
-		"""Initiate event loop."""
 		self.mainloop()
