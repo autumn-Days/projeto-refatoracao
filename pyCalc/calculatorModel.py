@@ -42,17 +42,16 @@ class CalculatorModel():
 		
         for button, y, x in self.other_btns :
             if button == "AC" :
-                parameters = (button,"red")
+                parameters = (button,"red","clear_all")
                 self.button_list[button] = self.create_button(parameters,custom=button)
             elif button == "=" :
-                self.button_list[button] = tk.Button(self, text=button, command=self.calculate,
-					                        font=self.FONT_LARGE, foreground="red")
+                parameters = (button,"red","calculate")
+                self.button_list[button] = self.create_button(parameters,custom=button)
             elif button == "x!" :
-                self.button_list[button] = tk.Button(self, text="x!", command= lambda v="!": self.factorial(v),
-					                        font=self.FONT_LARGE)
+                parameters = (button,"black","factorial")
+                self.button_list[button] = self.create_button(parameters,custom=button)
             elif button == "<-" :
-                self.button_list[button] = tk.Button(self, text="<-", command= self.undo,
-					                        font=self.FONT_LARGE)
+                self.button_list[button] = tk.Button(self, text="<-", command= self.undo,font=self.FONT_LARGE)
 
     def create_button(self,parameters,number=False,operation=False, custom=None):
         if (number):
@@ -62,15 +61,10 @@ class CalculatorModel():
             button, op = parameters
             return tk.Button(self, text=button, command=lambda v=op : self.get_operation(v), font=self.FONT_LARGE)
         elif (custom):
-            if custom == "AC":
-               buttom, color = parameters
-               return tk.Button(self, text=button, command=self.clear_all,font=self.FONT_LARGE, foreground=color)
-            elif custom == "=":
-                pass
-            elif custom == "x!":
-                pass
-            elif custom == "<-":
-                pass
+            buttom, color, method = parameters
+            return tk.Button(self, text=button, command=exec(f"self.{method}()",{"self":self}),font=self.FONT_LARGE, foreground=color)
+        elif custom == "<-":
+            pass
     def get_variables(self, num):
         if self.NEW_OPERATION:
             self.clear_all(new_operation=False)
@@ -110,7 +104,7 @@ class CalculatorModel():
             self.clear_all()
             self.display.insert(0, "Error!")
 
-    def factorial(self, operator):
+    def factorial(self):
         number = int(self.display.get())
         fact = 1
         try:
