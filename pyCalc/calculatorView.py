@@ -1,16 +1,11 @@
 #! /usr/bin/env python
-
-try:
-	import tkinter as tk
-	from tkinter import ttk
-except ImportError:
-	# Python 2
-	import Tkinter as tk
-	import ttk
+import tkinter as tk
+from tkinter import ttk
 
 import ast
 import base64
 from icons import icon_string
+from models.button import Botao
 
 class CalculatorView(tk.Tk):
 	FONT_LARGE = ("Calibri", 12)  	
@@ -72,21 +67,18 @@ class CalculatorView(tk.Tk):
 		self.display = tk.Entry(self, font=("Calibri", 13))
 		self.display.grid(row=1, columnspan=6, sticky=tk.W + tk.E)
 
-
 	def create_buttons(self):
 		number_button_aux = [(*t, '#') for t in self.number_btns]
 		other_button_aux = [(*t, '$') for t in self.other_btns]
 
 		for (button, y, x, op) in number_button_aux + self.operation_btns + other_button_aux:
 			if op == '#':
-				self.button_list[button] = tk.Button(self, text=button, command=lambda btn=button: self.get_variables(int(btn)), font=self.FONT_LARGE)
+				self.button_list[button] = Botao(button,self.FONT_LARGE,lambda btn=button: self.get_variables(int(btn)),"black", master=self)
 			elif op == '$':
 				if button == "AC" :
-					self.button_list[button] = tk.Button(self, text=button, command=self.clear_all,
-												font=self.FONT_LARGE, foreground="red")
+					self.button_list[button] = Botao(button, self.FONT_LARGE, self.clear_all, "red", master=self) #tk.Button(self, text=button, command=self.clear_all, font=self.FONT_LARGE, foreground="red")
 				elif button == "=" :
-					self.button_list[button] = tk.Button(self, text=button, command=self.calculate,
-												font=self.FONT_LARGE, foreground="red")
+					self.button_list[button] = Botao(button, self.FONT_LARGE, self.calculate, "red", master=self) # tk.Button(self, text=button, command=self.calculate, font=self.FONT_LARGE, foreground="red")
 				elif button == "x!" :
 					self.button_list[button] = tk.Button(self, text="x!", command= lambda v="!": self.factorial(v),
 												font=self.FONT_LARGE)
