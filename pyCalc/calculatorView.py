@@ -78,15 +78,13 @@ class CalculatorView(tk.Tk):
 				if button == "AC" :
 					self.button_list[button] = Botao(button, self.FONT_LARGE, self.clear_all, "red", master=self) #tk.Button(self, text=button, command=self.clear_all, font=self.FONT_LARGE, foreground="red")
 				elif button == "=" :
-					self.button_list[button] = Botao(button, self.FONT_LARGE, self.calculate, "red", master=self) # tk.Button(self, text=button, command=self.calculate, font=self.FONT_LARGE, foreground="red")
+					self.button_list[button] = Botao(button, self.FONT_LARGE, self.calculate, "red", master=self) #tk.Button(self, text=button, command=self.calculate, font=self.FONT_LARGE, foreground="red")
 				elif button == "x!" :
-					self.button_list[button] = tk.Button(self, text="x!", command= lambda v="!": self.factorial(v),
-												font=self.FONT_LARGE)
+					self.button_list[button] = Botao(button, self.FONT_LARGE, lambda v="!": self.factorial(v), "black", master=self)# tk.Button(self, text="x!", command= lambda v="!": self.factorial(v), font=self.FONT_LARGE)
 				elif button == "<-" :
-					self.button_list[button] = tk.Button(self, text="<-", command= self.undo,
-												font=self.FONT_LARGE, foreground="red")
+					self.button_list[button] = Botao(button, self.FONT_LARGE, self.undo, "red", master=self) #tk.Button(self, text="<-", command= self.undo, font=self.FONT_LARGE, foreground="red")
 			else :
-				self.button_list[button] = tk.Button(self, text=button, command=lambda v=op : self.get_operation(v), font=self.FONT_LARGE)
+				self.button_list[button] = Botao(button, self.FONT_LARGE, lambda v=op : self.get_operation(v), "black", master=self)#tk.Button(self, text=button, command=lambda v=op : self.get_operation(v), font=self.FONT_LARGE)
 
 
 	def display_buttons(self):
