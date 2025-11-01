@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 import tkinter as tk
 from tkinter import ttk
+from models.factoryButton import FabricaBotoes
 
 import ast
 import base64
@@ -9,20 +10,22 @@ from models.button import Botao
 #from config.fonts import FONT_LARGE, FONT_MED
 
 class CalculatorView(tk.Tk):
+
 	FONT_LARGE = ("Calibri", 12)  	
 	FONT_MED = ("Calibri", 10)
+	
 	number_btns = [    ('1', 2, 0), ('2', 2, 1), ('3', 2, 2),
                                 ('4', 3, 0), ('5', 3, 1), ('6', 3, 2),
                                 ('7', 4, 0), ('8', 4, 1), ('9', 4, 2),
                                 ('0', 5, 1) ]
 
-	operation_btns = [ ('+', 2, 3,'+'), ('-', 3, 3, '-'), ('*', 4, 3, '*'),
-                                ('/', 5, 3, '/'), ('pi', 2, 4, "*3.14"), ('%', 3, 4, '%'),
-                                ('(', 4, 4, '('), ('exp', 5, 4, "**"), (')', 4, 5, ')'),
-                                ('^2', 5, 5, "**2")]
+	operation_btns = [ ('+', 2, 3), ('-', 3, 3), ('*', 4, 3),
+                                ('/', 5, 3), ('pi', 2, 4), ('%', 3, 4),
+                                ('(', 4, 4), ('exp', 5, 4), (')', 4, 5),
+                                ('POT_2', 5, 5)]
 
-	other_btns = [ ('AC', 5, 0), ('=', 5, 2), 
-                            ('<-', 2, 5), ('x!', 3, 5)]
+	other_btns = [ ('AC', 5, 0), ("IGUAL", 5, 2), 
+                            ("APAG", 2, 5), ("FAT", 3, 5)]
 
 	button_list = {}
 	
@@ -68,84 +71,15 @@ class CalculatorView(tk.Tk):
 		self.display.grid(row=1, columnspan=6, sticky=tk.W + tk.E)
 
 	def create_buttons(self):
-		number_button_aux = [(*t, '#') for t in self.number_btns]
-		other_button_aux = [(*t, '$') for t in self.other_btns]
+		factory = FabricaBotoes(self, self.model)
 
-		for (button, y, x, op) in number_button_aux + self.operation_btns + other_button_aux:
-			if op == '#':
-				self.button_list[button] = Botao(button,self.FONT_LARGE,lambda btn=button: self.get_variables(int(btn)),"black", master=self)
-			elif op == '$':
-				if button == "AC" :
-					self.button_list[button] = Botao(button, self.FONT_LARGE, self.clear_all, "red", master=self) #tk.Button(self, text=button, command=self.clear_all, font=self.FONT_LARGE, foreground="red")
-				elif button == "=" :
-					self.button_list[button] = Botao(button, self.FONT_LARGE, self.calculate, "red", master=self) #tk.Button(self, text=button, command=self.calculate, font=self.FONT_LARGE, foreground="red")
-				elif button == "x!" :
-					self.button_list[button] = Botao(button, self.FONT_LARGE, lambda v="!": self.factorial(v), "black", master=self)# tk.Button(self, text="x!", command= lambda v="!": self.factorial(v), font=self.FONT_LARGE)
-				elif button == "<-" :
-					self.button_list[button] = Botao(button, self.FONT_LARGE, self.undo, "red", master=self) #tk.Button(self, text="<-", command= self.undo, font=self.FONT_LARGE, foreground="red")
-			else :
-				self.button_list[button] = Botao(button, self.FONT_LARGE, lambda v=op : self.get_operation(v), "black", master=self)#tk.Button(self, text=button, command=lambda v=op : self.get_operation(v), font=self.FONT_LARGE)
-
+		for (button, y, x) in self.number_btns + self.operation_btns + self.other_btns:
+			self.button_list[button] = factory.create(button)
+			#self.button_list[button].posicionar((y,x))
 
 	def display_buttons(self):
-		operation_buttons_aux = [t[:3] for t in self.operation_btns]
-
-		for (button, y, x) in self.number_btns + operation_buttons_aux + self.other_btns:
+		for (button, y, x) in self.number_btns + self.operation_btns + self.other_btns:
 				self.button_list[button].grid(row=y, column=x)
-
-	def factorial(self, operator):
-		number = int(self.display.get())
-		fact = 1
-		try:
-			while number > 0:
-				fact = fact*number
-				number -= 1
-			self.clear_all()
-			self.display.insert(0, fact)
-		except Exception:
-			self.clear_all()
-			self.display.insert(0, "Error")
-
-	def clear_all(self, new_operation=True):
-		self.display.delete(0, tk.END)
-		self.NEW_OPERATION = new_operation
-
-	def get_variables(self, num):
-		if self.NEW_OPERATION:
-			self.clear_all(new_operation=False)
-		self.display.insert(self.i, num)
-		self.i += 1
-
-	def get_operation(self, operator):
-		#Obtem o operando que o usuario quer aplicar a uma funcao
-		length = len(operator)
-		self.display.insert(self.i, operator)
-		self.i += length
-
-	def undo(self):
-		#Remove o ultim operador ou digito inserido
-		whole_string = self.display.get()
-		if len(whole_string):        
-			new_string = whole_string[:-1]
-			self.clear_all(new_operation=False)
-			self.display.insert(0, new_string)
-		else:
-			self.clear_all() 
-			self.display.insert(0, "Error, press AC")
-
-	def calculate(self):
-		"""Evaluates the expression.
-		ref : http://stackoverflow.com/questions/594266/equation-parsing-in-python
-		"""
-		whole_string = self.display.get()
-		self.controller.func_test()
-		try:
-			result = eval(compile(ast.parse(whole_string, mode="eval"), "<string>", "eval"))
-			self.clear_all()
-			self.display.insert(0, result)
-		except Exception:
-			self.clear_all()
-			self.display.insert(0, "Error!")
 
 	def run(self):
 		self.mainloop()
