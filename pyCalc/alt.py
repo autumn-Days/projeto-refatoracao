@@ -1,3 +1,4 @@
+"""
 #! /usr/bin/env python
 
 try:
@@ -171,10 +172,10 @@ class TkGUI(tk.Tk):
 			self.display.insert(0, "Error, press AC")
 
 	def calculate(self):
-	    """Evaluates the expression.
+	    #Evaluates the expression.
 
-	    ref : http://stackoverflow.com/questions/594266/equation-parsing-in-python
-	    """
+	    #ref : http://stackoverflow.com/questions/594266/equation-parsing-in-python
+	    
 	    whole_string = self.display.get()
 	    try:
 	        result = eval(compile(ast.parse(whole_string, mode="eval"), "<string>", "eval"))
@@ -191,3 +192,4 @@ class TkGUI(tk.Tk):
 
 app = TkGUI()
 app.run()
+"""

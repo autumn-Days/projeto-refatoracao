@@ -7,13 +7,8 @@ import ast
 import base64
 from icons import icon_string
 from models.button import Botao
-#from config.fonts import FONT_LARGE, FONT_MED
 
 class CalculatorView(tk.Tk):
-
-	FONT_LARGE = ("Calibri", 12)  	
-	FONT_MED = ("Calibri", 10)
-	
 	number_btns = [    ('1', 2, 0), ('2', 2, 1), ('3', 2, 2),
                                 ('4', 3, 0), ('5', 3, 1), ('6', 3, 2),
                                 ('7', 4, 0), ('8', 4, 1), ('9', 4, 2),
