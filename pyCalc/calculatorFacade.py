@@ -1,8 +1,8 @@
-from calculatorView import CalculatorView
+import front.calculatorView as front
 
 class CalculatorController:
     def __init__(self, model):
-        self.view = CalculatorView(model)
+        self.view = front.CalculatorView(model)
         model.master = self.view
 
     def config_view(self):

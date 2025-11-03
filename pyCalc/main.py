@@ -1,7 +1,7 @@
 #! /usr/bin/env python
-from calculatorModel import CalculatorModel
-from calculatorController import CalculatorController
+import back.calculatorModel as back
+from calculatorFacade import CalculatorController
 
-model = CalculatorModel()
+model = back.CalculatorModel()
 app = CalculatorController(model)
 app.run_app()

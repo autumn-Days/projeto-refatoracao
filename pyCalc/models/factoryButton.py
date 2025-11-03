@@ -1,6 +1,6 @@
 from models.button import Botao
 from utils.operations import *
-from calculatorModel import *
+from back.calculatorModel import *
 
 class FabricaBotoes:
 
