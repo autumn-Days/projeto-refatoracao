@@ -38,6 +38,8 @@ class TkGUI(tk.Tk):
 		style = ttk.Style(self)
 		style.theme_use('clam')
 
+		self.show_scientific_buttons = False
+
 		# Configure icon
 		icon_data = base64.b64decode(icon_string)
 		self.icon = tk.PhotoImage(data=icon_data)
@@ -55,88 +57,112 @@ class TkGUI(tk.Tk):
 		self._init_ui()
 
 	def _init_ui(self):
-		one = tk.Button(
+		self.one = tk.Button(
 			self, text="1", command=lambda: self.get_variables(1), font=self.FONT_LARGE)
-		one.grid(row=2, column=0)
-		two = tk.Button(
+		self.one.grid(row=2, column=0)
+		self.two = tk.Button(
 			self, text="2", command=lambda: self.get_variables(2), font=self.FONT_LARGE)
-		two.grid(row=2, column=1)
-		three = tk.Button(
+		self.two.grid(row=2, column=1)
+		self.three = tk.Button(
 			self, text="3", command=lambda: self.get_variables(3), font=self.FONT_LARGE)
-		three.grid(row=2, column=2)
+		self.three.grid(row=2, column=2)
 
-		four = tk.Button(
+		self.four = tk.Button(
 			self, text="4", command=lambda: self.get_variables(4), font=self.FONT_LARGE)
-		four.grid(row=3, column=0)
-		five = tk.Button(
+		self.four.grid(row=3, column=0)
+		self.five = tk.Button(
 			self, text="5", command=lambda: self.get_variables(5), font=self.FONT_LARGE)
-		five.grid(row=3, column=1)
-		six = tk.Button(
+		self.five.grid(row=3, column=1)
+		self.six = tk.Button(
 			self, text="6", command=lambda: self.get_variables(6), font=self.FONT_LARGE)
-		six.grid(row=3, column=2)
+		self.six.grid(row=3, column=2)
 
-		seven = tk.Button(
+		self.seven = tk.Button(
 			self, text="7", command=lambda: self.get_variables(7), font=self.FONT_LARGE)
-		seven.grid(row=4, column=0)
-		eight = tk.Button(
+		self.seven.grid(row=4, column=0)
+		self.eight = tk.Button(
 			self, text="8", command=lambda: self.get_variables(8), font=self.FONT_LARGE)
-		eight.grid(row=4, column=1)
-		nine = tk.Button(
+		self.eight.grid(row=4, column=1)
+		self.nine = tk.Button(
 			self, text="9", command=lambda: self.get_variables(9), font=self.FONT_LARGE)
-		nine.grid(row=4, column=2)
+		self.nine.grid(row=4, column=2)
 
-		cls = tk.Button(self, text="AC", command=self.clear_all,
+		self.cls = tk.Button(self, text="AC", command=self.clear_all,
 						font=self.FONT_LARGE, foreground="red")
-		cls.grid(row=5, column=0)
-		zero = tk.Button(
+		self.cls.grid(row=5, column=0)
+		self.zero = tk.Button(
 			self, text="0", command=lambda: self.get_variables(0), font=self.FONT_LARGE)
-		zero.grid(row=5, column=1)
-		result = tk.Button(self, text="=", command=self.calculate,
+		self.zero.grid(row=5, column=1)
+		self.result = tk.Button(self, text="=", command=self.calculate,
 						   font=self.FONT_LARGE, foreground="red")
-		result.grid(row=5, column=2)
+		self.result.grid(row=5, column=2)
 
-		plus = tk.Button(
+		self.plus = tk.Button(
 			self, text="+", command=lambda: self.get_operation("+"), font=self.FONT_LARGE)
-		plus.grid(row=2, column=3)
-		minus = tk.Button(
+		self.plus.grid(row=2, column=3)
+		self.minus = tk.Button(
 			self, text="-", command=lambda: self.get_operation("-"), font=self.FONT_LARGE)
-		minus.grid(row=3, column=3)
-		multiply = tk.Button(
+		self.minus.grid(row=3, column=3)
+		self.multiply = tk.Button(
 			self, text="*", command=lambda: self.get_operation("*"), font=self.FONT_LARGE)
-		multiply.grid(row=4, column=3)
-		divide = tk.Button(
+		self.multiply.grid(row=4, column=3)
+		self.divide = tk.Button(
 			self, text="/", command=lambda:  self.get_operation("/"), font=self.FONT_LARGE)
-		divide.grid(row=5, column=3)
+		self.divide.grid(row=5, column=3)
 
 		# adding new operations
-		pi = tk.Button(self, text="pi", command=lambda: self.get_operation(
+		self.pi = tk.Button(self, text="pi", command=lambda: self.get_operation(
 			"*3.14"), font=self.FONT_LARGE)
-		pi.grid(row=2, column=4)
-		modulo = tk.Button(
+		self.pi.grid(row=2, column=4)
+		self.modulo = tk.Button(
 			self, text="%", command=lambda:  self.get_operation("%"), font=self.FONT_LARGE)
-		modulo.grid(row=3, column=4)
-		left_bracket = tk.Button(
+		self.modulo.grid(row=3, column=4)
+		self.left_bracket = tk.Button(
 			self, text="(", command=lambda: self.get_operation("("), font=self.FONT_LARGE)
-		left_bracket.grid(row=4, column=4)
-		exp = tk.Button(self, text="exp",
+		self.left_bracket.grid(row=4, column=4)
+		self.exp = tk.Button(self, text="exp",
 						command=lambda: self.get_operation("**"), font=self.FONT_MED)
-		exp.grid(row=5, column=4)
+		self.exp.grid(row=5, column=4)
 
 		# To be added :
 		# sin, cos, log, ln
-		undo_button = tk.Button(
+		self.undo_button = tk.Button(
 			self, text="<-", command=self.undo, font=self.FONT_LARGE, foreground="red")
-		undo_button.grid(row=2, column=5)
-		fact = tk.Button(
+		self.undo_button.grid(row=2, column=5)
+		self.fact = tk.Button(
 			self, text="x!", command=lambda: self.factorial("!"), font=self.FONT_LARGE)
-		fact.grid(row=3, column=5)
-		right_bracket = tk.Button(
+		self.fact.grid(row=3, column=5)
+		self.right_bracket = tk.Button(
 			self, text=")", command=lambda: self.get_operation(")"), font=self.FONT_LARGE)
-		right_bracket.grid(row=4, column=5)
-		square = tk.Button(
+		self.right_bracket.grid(row=4, column=5)
+		self.square = tk.Button(
 			self, text="^2", command=lambda: self.get_operation("**2"), font=self.FONT_MED)
-		square.grid(row=5, column=5)
+		self.square.grid(row=5, column=5)
+		
+		self.mode = tk.Button(
+			self, text="Mode", command=self.switch_mode)
+		self.mode.grid(row=6, column=0)
 
+	def switch_mode(self):
+		""""Switches the mode of the calculator."""
+		if not self.show_scientific_buttons:
+			self.pi.grid_forget()
+			self.fact.grid_forget()
+			self.square.grid_forget()
+			self.modulo.grid_forget()
+			self.right_bracket.grid_forget()
+			self.left_bracket.grid_forget()
+			self.exp.grid_forget()
+		else :
+			self.pi.grid(row=2, column=4)
+			self.fact.grid(row=3, column=5)
+			self.square.grid(row=5, column=5)
+			self.modulo.grid(row=3, column=4)
+			self.right_bracket.grid(row=4, column=5)
+			self.left_bracket.grid(row=4, column=4)
+			self.exp.grid(row=5, column=4)
+		self.show_scientific_buttons = not self.show_scientific_buttons
+		
 	def factorial(self, operator):
 		"""Calculates the factorial of the number entered."""
 		number = int(self.display.get())
