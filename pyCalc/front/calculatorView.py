@@ -6,9 +6,31 @@ from models.factoryButton import FabricaBotoes
 import ast
 import base64
 from icons import icon_string
-from models.button import Botao
 
-class CalculatorView(tk.Tk):
+# Acredito que o ideal seja retirar os States deste arquivo e colocá-los em outro,
+# para depois importá-los para cá. Achei um tanto desnecessário aplicar mudanças
+# em métodos já que tudo é implementado em outros arquivos e mudaria praticamente nada,
+# então deixei os states apenas com os atributos dos botões.
+
+# Tudo está manual, para mudar de um estado para o outro basta mudar a definição no
+# construtor da classe CalculatorView
+class CalculatorState:
+	def __init__(self):
+		pass
+
+class CalculatorBasicState(CalculatorState):
+	number_btns = [    ('1', 2, 0), ('2', 2, 1), ('3', 2, 2),
+                                ('4', 3, 0), ('5', 3, 1), ('6', 3, 2),
+                                ('7', 4, 0), ('8', 4, 1), ('9', 4, 2),
+                                ('0', 5, 1) ]
+
+	operation_btns = [ ('+', 2, 3), ('-', 3, 3), ('*', 4, 3),('/', 5, 3)]
+
+	other_btns = [ ('AC', 5, 0), ("IGUAL", 5, 2), 
+                            ("APAG", 2, 5)]
+
+
+class CalculatorScientificState(CalculatorState):
 	number_btns = [    ('1', 2, 0), ('2', 2, 1), ('3', 2, 2),
                                 ('4', 3, 0), ('5', 3, 1), ('6', 3, 2),
                                 ('7', 4, 0), ('8', 4, 1), ('9', 4, 2),
@@ -17,10 +39,13 @@ class CalculatorView(tk.Tk):
 	operation_btns = [ ('+', 2, 3), ('-', 3, 3), ('*', 4, 3),
                                 ('/', 5, 3), ('pi', 2, 4), ('%', 3, 4),
                                 ('(', 4, 4), ('exp', 5, 4), (')', 4, 5),
-                                ('POT_2', 5, 5)]
+                                ('POT_2', 5, 5), ("FAT", 3, 5)]
 
 	other_btns = [ ('AC', 5, 0), ("IGUAL", 5, 2), 
-                            ("APAG", 2, 5), ("FAT", 3, 5)]
+                            ("APAG", 2, 5)]
+
+
+class CalculatorView(tk.Tk):
 
 	button_list = {}
 	
@@ -33,9 +58,9 @@ class CalculatorView(tk.Tk):
 		try:
 			super(CalculatorView, self).__init__()
 		except TypeError:
-			
 			tk.Tk.__init__(self)
 
+		self.state = CalculatorScientificState()
 		self.model = model
 		self.controller = None
 
@@ -68,12 +93,12 @@ class CalculatorView(tk.Tk):
 	def create_buttons(self):
 		factory = FabricaBotoes(self, self.model)
 
-		for (button, y, x) in self.number_btns + self.operation_btns + self.other_btns:
+		for (button, y, x) in self.state.number_btns + self.state.operation_btns + self.state.other_btns:
 			self.button_list[button] = factory.create(button)
 			#self.button_list[button].posicionar((y,x))
 
 	def display_buttons(self):
-		for (button, y, x) in self.number_btns + self.operation_btns + self.other_btns:
+		for (button, y, x) in self.state.number_btns + self.state.operation_btns + self.state.other_btns:
 				self.button_list[button].grid(row=y, column=x)
 
 	def run(self):
