@@ -2,7 +2,7 @@ import front.calculatorView as front
 
 class CalculatorController:
     def __init__(self, model):
-        self.view = front.CalculatorView(model)
+        self.view = front.CalculatorBasic(model)
         model.master = self.view
 
     def config_view(self):
@@ -12,7 +12,7 @@ class CalculatorController:
 
         self.view.create_buttons()
         
-        self.view.display_buttons()
+        #self.view.display_buttons()
     
     def run_app(self):
         self.config_view()

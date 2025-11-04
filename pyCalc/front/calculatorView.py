@@ -8,19 +8,15 @@ import base64
 from icons import icon_string
 from models.button import Botao
 
-class CalculatorView(tk.Tk):
-	number_btns = [    ('1', 2, 0), ('2', 2, 1), ('3', 2, 2),
-                                ('4', 3, 0), ('5', 3, 1), ('6', 3, 2),
-                                ('7', 4, 0), ('8', 4, 1), ('9', 4, 2),
-                                ('0', 5, 1) ]
-
-	operation_btns = [ ('+', 2, 3), ('-', 3, 3), ('*', 4, 3),
-                                ('/', 5, 3), ('pi', 2, 4), ('%', 3, 4),
-                                ('(', 4, 4), ('exp', 5, 4), (')', 4, 5),
-                                ('POT_2', 5, 5)]
-
-	other_btns = [ ('AC', 5, 0), ("IGUAL", 5, 2), 
-                            ("APAG", 2, 5), ("FAT", 3, 5)]
+class CalculatorBasic(tk.Tk):
+	#as linhas começam do dois
+	buttons = [
+		["1","2","3","+","pi","APAG"],
+		["4","5","6","-","%","FAT"],
+		["7","8","9","*","(",")"],
+		["AC","0","IGUAL","/","exp","POT_2"],
+		["MODE"]
+	]
 
 	button_list = {}
 	
@@ -31,7 +27,7 @@ class CalculatorView(tk.Tk):
 
 	def __init__(self, model):
 		try:
-			super(CalculatorView, self).__init__()
+			super(CalculatorBasic, self).__init__()
 		except TypeError:
 			
 			tk.Tk.__init__(self)
@@ -68,13 +64,23 @@ class CalculatorView(tk.Tk):
 	def create_buttons(self):
 		factory = FabricaBotoes(self, self.model)
 
-		for (button, y, x) in self.number_btns + self.operation_btns + self.other_btns:
-			self.button_list[button] = factory.create(button)
-			#self.button_list[button].posicionar((y,x))
-
-	def display_buttons(self):
-		for (button, y, x) in self.number_btns + self.operation_btns + self.other_btns:
-				self.button_list[button].grid(row=y, column=x)
+		for i in range(len(self.buttons)):
+			for j in range(len(self.buttons[i])):
+				button = self.buttons[i][j]
+				self.button_list[button] = factory.create(button)
+				self.button_list[button].grid(row=i+2,column=j)
 
 	def run(self):
 		self.mainloop()
+
+class CalculatorAdvanced(CalculatorBasic):
+	def __init__(self, model):
+		super().__init__(model)
+		self.buttons = 	buttons = [
+		["1","2","3","+","SQRT","pi","APAG"],
+		["4","5","6","-","SEN","%","FAT"],
+		["7","8","9","*","COS","(",")"],
+		["AC","0","IGUAL","/","TAN","exp","POT_2"],
+		["MODE"]
+	]
+	

@@ -1,12 +1,12 @@
 import tkinter as tk
 from tkinter import ttk
 import ast
+import math
 
 class CalculatorModel():
 
     def __init__(self, master = None):
         self.master = master
-        pass
 
     def factorial(self, operator):
         number = int(self.master.display.get())
@@ -47,6 +47,29 @@ class CalculatorModel():
         else:
             self.clear_all() 
             self.master.display.insert(0, "Error, press AC")
+
+    def sqrt(self):
+        num = int(self.master.display.get())
+        num = math.sqrt(num)
+        self.master.display.insert(0, num)
+    
+    def sen(self):
+        num = int(self.master.display.get())
+        num = math.sin(num)
+        self.master.display.insert(0, num)
+            
+    def cos(self):
+        num = int(self.master.display.get())
+        num = math.cos(num)
+        self.master.display.insert(0, num)
+
+    def tan(self, tan:float):
+        num = int(self.master.display.get())
+        num = math.tan(num)
+        self.master.display.insert(0, num)
+
+    def switch(self):
+        return 
 
     def calculate(self):
         """Evaluates the expression.
