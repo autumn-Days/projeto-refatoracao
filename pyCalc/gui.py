@@ -12,6 +12,7 @@ except ImportError:
 import ast
 import base64
 from icons import icon_string
+import math
 
 
 class TkGUI(tk.Tk):
@@ -52,7 +53,7 @@ class TkGUI(tk.Tk):
 			self.rowconfigure(column,pad=3)
 
 		self.display = tk.Entry(self, font=("Calibri", 13))
-		self.display.grid(row=1, columnspan=6, sticky=tk.W + tk.E)
+		self.display.grid(row=1, columnspan=7, sticky=tk.W + tk.E)
 
 		self._init_ui()
 
@@ -113,54 +114,64 @@ class TkGUI(tk.Tk):
 		# adding new operations
 		self.pi = tk.Button(self, text="pi", command=lambda: self.get_operation(
 			"*3.14"), font=self.FONT_LARGE)
-		self.pi.grid(row=2, column=4)
+		self.pi.grid(row=2, column=5)
 		self.modulo = tk.Button(
 			self, text="%", command=lambda:  self.get_operation("%"), font=self.FONT_LARGE)
-		self.modulo.grid(row=3, column=4)
+		self.modulo.grid(row=3, column=5)
 		self.left_bracket = tk.Button(
 			self, text="(", command=lambda: self.get_operation("("), font=self.FONT_LARGE)
-		self.left_bracket.grid(row=4, column=4)
+		self.left_bracket.grid(row=4, column=5)
 		self.exp = tk.Button(self, text="exp",
-						command=lambda: self.get_operation("**"), font=self.FONT_MED)
-		self.exp.grid(row=5, column=4)
+						command=lambda: self.get_operation("**"), font=self.FONT_LARGE)
+		self.exp.grid(row=5, column=5)
 
 		# To be added :
 		# sin, cos, log, ln
 		self.undo_button = tk.Button(
 			self, text="<-", command=self.undo, font=self.FONT_LARGE, foreground="red")
-		self.undo_button.grid(row=2, column=5)
+		self.undo_button.grid(row=2, column=6)
 		self.fact = tk.Button(
 			self, text="x!", command=lambda: self.factorial("!"), font=self.FONT_LARGE)
-		self.fact.grid(row=3, column=5)
+		self.fact.grid(row=3, column=6)
 		self.right_bracket = tk.Button(
 			self, text=")", command=lambda: self.get_operation(")"), font=self.FONT_LARGE)
-		self.right_bracket.grid(row=4, column=5)
+		self.right_bracket.grid(row=4, column=6)
 		self.square = tk.Button(
-			self, text="^2", command=lambda: self.get_operation("**2"), font=self.FONT_MED)
-		self.square.grid(row=5, column=5)
+			self, text="^2", command=lambda: self.get_operation("**2"), font=self.FONT_LARGE)
+		self.square.grid(row=5, column=6)
+
+		self.root = tk.Button(
+			self, text="SQRT", command= self.sqrt, font=self.FONT_LARGE)
+		self.root.grid(row=2, column=4)
+		self.sine = tk.Button(
+			self, text="SIN", command= self.sen, font=self.FONT_LARGE)
+		self.sine.grid(row=3, column=4)
+		self.cosine = tk.Button(
+			self, text="COS", command=self.cos, font=self.FONT_LARGE)
+		self.cosine.grid(row=4, column=4)
+		self.tangent = tk.Button(
+			self, text="TAN", command=self.tan, font=self.FONT_LARGE)
+		self.tangent.grid(row=5, column=4)
 		
 		self.mode = tk.Button(
-			self, text="Mode", command=self.switch_mode)
+			self, text="MODE", command=self.switch_mode, font=self.FONT_LARGE,
+			foreground="red")
 		self.mode.grid(row=6, column=0)
 
 	def switch_mode(self):
 		""""Switches the mode of the calculator."""
 		if not self.show_scientific_buttons:
-			self.pi.grid_forget()
-			self.fact.grid_forget()
-			self.square.grid_forget()
-			self.modulo.grid_forget()
-			self.right_bracket.grid_forget()
-			self.left_bracket.grid_forget()
-			self.exp.grid_forget()
+			self.root.grid_forget()
+			self.sine.grid_forget()
+			self.cosine.grid_forget()
+			self.tangent.grid_forget()
 		else :
-			self.pi.grid(row=2, column=4)
-			self.fact.grid(row=3, column=5)
-			self.square.grid(row=5, column=5)
-			self.modulo.grid(row=3, column=4)
-			self.right_bracket.grid(row=4, column=5)
-			self.left_bracket.grid(row=4, column=4)
-			self.exp.grid(row=5, column=4)
+			self.root.grid(row=2, column=4)
+			self.sine.grid(row=3, column=4)
+			self.cosine.grid(row=4, column=4)
+			self.tangent.grid(row=5, column=4)
+
+
 		self.show_scientific_buttons = not self.show_scientific_buttons
 		
 	def factorial(self, operator):
@@ -211,20 +222,44 @@ class TkGUI(tk.Tk):
 			self.display.insert(0, "Error, press AC")
 
 	def calculate(self):
-	    """Evaluates the expression.
+		"""Evaluates the expression.
 
-	    ref : http://stackoverflow.com/questions/594266/equation-parsing-in-python
-	    """
-	    whole_string = self.display.get()
-	    try:
-	        result = eval(compile(ast.parse(whole_string, mode="eval"), "<string>", "eval"))
+		ref : http://stackoverflow.com/questions/594266/equation-parsing-in-python
+		"""
+		whole_string = self.display.get()
+		try:
+			result = eval(compile(ast.parse(whole_string, mode="eval"), "<string>", "eval"))
 			#formulae = ast.parse(whole_string, mode="eval")
-	        #result = eval(formulae)
-	        self.clear_all()
-	        self.display.insert(0, result)
-	    except Exception:
-	        self.clear_all()
-	        self.display.insert(0, "Error!")
+			#result = eval(formulae)
+			self.clear_all()
+			self.display.insert(0, result)
+		except Exception:
+			self.clear_all()
+			self.display.insert(0, "Error!")
+
+	def sqrt(self):
+		num = int(self.display.get())
+		num = math.sqrt(num)
+		self.clear_all()
+		self.display.insert(0, num)
+    
+	def sen(self):
+		num = int(self.display.get())
+		num = math.sin(num)
+		self.clear_all()
+		self.display.insert(0, num)
+            
+	def cos(self):
+		num = int(self.display.get())
+		num = math.cos(num)
+		self.clear_all()
+		self.display.insert(0, num)
+
+	def tan(self, tan:float):
+		num = int(self.display.get())
+		num = math.tan(num)
+		self.clear_all()
+		self.display.insert(0, num)
 
 	def run(self):
 		"""Initiate event loop."""
